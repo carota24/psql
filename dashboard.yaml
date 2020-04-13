@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: my-ingress
+  namespace: kubernetes-dashboard
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+spec:
+  tls:
+  - hosts:
+    - kubernetes-dashboard.fritz.box
+    secretName: "kubernetes-dashboard-staging-tls"
+  rules:
+  - host: kubernetes-dashboard.fritz.box
+    http:
+      paths:
+        - path: /
+          backend:
+            serviceName: kubernetes-dashboard
+            servicePort: 80
